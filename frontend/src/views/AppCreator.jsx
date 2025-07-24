@@ -54,7 +54,7 @@ import YAML from "yaml";
 import { MuiChipsInput } from "mui-chips-input";
 //import { useAlert
 import { ToastContainer, toast } from "react-toastify" 
-import words from "shellwords";
+import { split as words } from "shellwords";
 
 import AvatarEditor from "react-avatar-editor";
 import { Context } from "../context/ContextApi.jsx";

@@ -295,7 +295,6 @@ i18n
             "loading": "Загрузка...",
             "no_results": "Результаты не найдены",
             "confirm_delete": "Вы уверены, что хотите удалить этот элемент?"
- cursor/translate-frontend-to-russian-6cb1
           },
 
           // License management
@@ -361,8 +360,6 @@ i18n
             "default_warning_message": "Для использования этой функции требуется активная лицензия.",
             "current_license_info": "Информация о текущей лицензии",
             "type": "Тип"
-=======
- main
           }
         }
       }
