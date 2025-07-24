@@ -130,6 +130,7 @@ docker compose pull
    - Clean unused Docker resources: `docker system prune -f`
    - Remove old images: `docker image prune -f`
 
+cursor/fix-docker-compose-volume-error-and-add-cleanup-script-e0be
 5. **Go compilation errors**
    - The system downloads Go dependencies on first run (this takes time)
    - If compilation fails, check Go version: `go version`
@@ -145,6 +146,8 @@ docker compose pull
    - The script now handles dependency installation automatically
    - First run may take longer due to dependency downloads
 
+=======
+ main
 ### Logs and Debugging
 
 ```bash
