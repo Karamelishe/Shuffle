@@ -130,6 +130,21 @@ docker compose pull
    - Clean unused Docker resources: `docker system prune -f`
    - Remove old images: `docker image prune -f`
 
+5. **Go compilation errors**
+   - The system downloads Go dependencies on first run (this takes time)
+   - If compilation fails, check Go version: `go version`
+   - Ensure internet connectivity for dependency downloads
+
+6. **Frontend build errors**
+   - Dependencies are installed automatically with `--legacy-peer-deps`
+   - If issues persist, manually run: `cd frontend && npm install --legacy-peer-deps`
+   - Node.js version compatibility may be required
+
+7. **Test system script errors**
+   - Run `./test_system.sh` to identify specific component issues
+   - The script now handles dependency installation automatically
+   - First run may take longer due to dependency downloads
+
 ### Logs and Debugging
 
 ```bash
