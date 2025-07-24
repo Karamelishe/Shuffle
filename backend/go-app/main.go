@@ -5130,7 +5130,7 @@ func initHandlers() {
 	// Make user related locations
 	// Fix user changes with org
 	r.HandleFunc("/api/v1/users/login", shuffle.HandleLogin).Methods("POST", "OPTIONS")
-	r.HandleFunc("/api/v1/users/register", handleRegister).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/v1/users/register", checkLicenseMiddleware(handleRegister, "users")).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/v1/users/checkusers", checkAdminLogin).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/users/getinfo", handleInfo).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/users/{userId}/apps", shuffle.HandleGetUserApps).Methods("GET", "OPTIONS")
@@ -5161,6 +5161,11 @@ func initHandlers() {
 
 	r.HandleFunc("/api/v1/getenvironments", shuffle.HandleGetEnvironments).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/setenvironments", shuffle.HandleSetEnvironments).Methods("PUT", "OPTIONS")
+
+	// License management endpoints
+	r.HandleFunc("/api/v1/license/generate", handleGenerateLicense).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/v1/license/activate", handleActivateLicense).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/v1/license/info", handleGetLicenseInfo).Methods("GET", "OPTIONS")
 
 	r.HandleFunc("/api/v1/docs", shuffle.GetDocList).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/docs/{key}", shuffle.GetDocs).Methods("GET", "OPTIONS")
@@ -5225,18 +5230,18 @@ func initHandlers() {
 	// Workflows
 	// FIXME - implement the queue counter lol
 	/* Everything below here increases the counters*/
-	r.HandleFunc("/api/v1/workflows", shuffle.GetWorkflows).Methods("GET", "OPTIONS")
-	r.HandleFunc("/api/v1/workflows", shuffle.SetNewWorkflow).Methods("POST", "OPTIONS")
-	r.HandleFunc("/api/v1/workflows/search", shuffle.HandleWorkflowRunSearch).Methods("POST", "OPTIONS")
-	r.HandleFunc("/api/v1/workflows/schedules", shuffle.HandleGetSchedules).Methods("GET", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows", checkLicenseMiddleware(shuffle.GetWorkflows, "")).Methods("GET", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows", checkLicenseMiddleware(shuffle.SetNewWorkflow, "workflows")).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows/search", checkLicenseMiddleware(shuffle.HandleWorkflowRunSearch, "")).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows/schedules", checkLicenseMiddleware(shuffle.HandleGetSchedules, "")).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/executions", shuffle.GetWorkflowExecutions).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/executions/count", shuffle.HandleGetWorkflowRunCount).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/executions/{key}/rerun", checkUnfinishedExecution).Methods("GET", "POST", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/executions/{key}/abort", shuffle.AbortExecution).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/schedule", scheduleWorkflow).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/download_remote", loadSpecificWorkflows).Methods("POST", "OPTIONS")
-	r.HandleFunc("/api/v1/workflows/{key}/run", executeWorkflow).Methods("GET", "POST", "OPTIONS")
-	r.HandleFunc("/api/v1/workflows/{key}/execute", executeWorkflow).Methods("GET", "POST", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows/{key}/run", checkLicenseMiddleware(executeWorkflow, "executions")).Methods("GET", "POST", "OPTIONS")
+	r.HandleFunc("/api/v1/workflows/{key}/execute", checkLicenseMiddleware(executeWorkflow, "executions")).Methods("GET", "POST", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/schedule/{schedule}", stopSchedule).Methods("DELETE", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/stream", shuffle.HandleStreamWorkflow).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/v1/workflows/{key}/stream", shuffle.HandleStreamWorkflowUpdate).Methods("POST", "OPTIONS")
