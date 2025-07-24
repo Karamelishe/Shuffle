@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 
 import { makeStyles } from "@mui/styles";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import SecurityFramework from '../components/SecurityFramework.jsx';
 import EditWorkflow from "../components/EditWorkflow.jsx"
 import Priority from "../components/Priority.jsx";
@@ -741,6 +742,7 @@ const DropzoneWrapper = memo(({ onDrop, WorkflowView }) => {
 
 const Workflows = (props) => {
   const { globalUrl, isLoggedIn, isLoaded, userdata, checkLogin } = props;
+  const { t } = useTranslation();
 
   document.title = "Shuffle - Workflows";
   let navigate = useNavigate();
@@ -3315,7 +3317,7 @@ const Workflows = (props) => {
               },
             }}
             color="primary"
-            placeholder="Name"
+            placeholder={t('common.name')}
             required
             margin="dense"
             defaultValue={newWorkflowName}
@@ -3331,7 +3333,7 @@ const Workflows = (props) => {
             }}
             color="primary"
             defaultValue={newWorkflowDescription}
-            placeholder="Description"
+            placeholder={t('common.description')}
             multiline
             margin="dense"
             fullWidth
@@ -3344,7 +3346,7 @@ const Workflows = (props) => {
                   color: "white",
                 },
               }}
-              placeholder="Tags"
+              placeholder={t('common.tags')}
               color="primary"
               fullWidth
               value={newWorkflowTags}
@@ -3794,7 +3796,7 @@ const Workflows = (props) => {
                       },
                     }}
                     rows={1}
-                    placeholder="Filter Workflows"
+                    placeholder={t('workflows.search_placeholder')}
                     color="primary"
                     fullWidth
                     value={filters}

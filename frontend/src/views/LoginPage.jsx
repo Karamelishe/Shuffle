@@ -5,6 +5,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { toast } from 'react-toastify';
 import { useInterval } from "react-powerhooks";
+import { useTranslation } from 'react-i18next';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
@@ -284,6 +285,7 @@ const MarketplaceCard = ({ classes }) => {
 const LoginPage = props => {
 	const { globalUrl, isLoaded, isLoggedIn, setIsLoggedIn, setCookie, inregister, serverside, checkLogin, } = props;
 	let navigate = useNavigate();
+	const { t } = useTranslation();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [message, setMessage] = useState("");
@@ -712,7 +714,7 @@ const LoginPage = props => {
 		setLoginWithSSO(true)
 	}
 
-	var formtitle = register ? <div>Welcome Back!</div> : <div>Create your account</div>
+	var formtitle = register ? <div>{t('login.welcome_back')}</div> : <div>{t('login.sign_in')}</div>
 	var formButton = !isCloud ? "" : register ? <div style={{ display: "flex" }}> <div style={{ fontSize: "14px", paddingRight: "7px", textDecoration: "none", }}>Don’t have an account yet?</div> <Link style={hrefStyle} to={`/register${parsedsearch}`}><div>Register here</div></Link></div> : <>
 
 		<div style={{ display: "flex", marginTop: 40, marginBottom: -10 }}> <div style={{ fontSize: "14px", paddingRight: "7px", textDecoration: "none", }}>Already have an account?</div> <Link style={hrefStyle} to={`/login${parsedsearch}`}><div>Login here</div></Link></div>
@@ -778,7 +780,7 @@ const LoginPage = props => {
 						</Typography>
 
 						<div style={{ marginBottom: 20, textAlign: "left", }}>
-							<div style={{ marginBottom: 5 }}>{isCloud ? "Email" : "Username"}</div>
+							<div style={{ marginBottom: 5 }}>{isCloud ? t('login.email_placeholder') : t('common.username')}</div>
 							<TextField
 								color="primary"
 								style={{
@@ -800,7 +802,7 @@ const LoginPage = props => {
 								required
 								fullWidth={true}
 								autoComplete="username"
-								placeholder="username@example.com"
+								placeholder={t('login.email_placeholder')}
 								id="emailfield"
 								margin="normal"
 								variant="outlined"
@@ -810,7 +812,7 @@ const LoginPage = props => {
 
 						{!loginWithSSO && (
 							<div style={{ marginBottom: 20, textAlign: "left", }}>
-								<div style={{ marginBottom: 5 }}>Password</div>
+								<div style={{ marginBottom: 5 }}>{t('common.password')}</div>
 								<TextField
 									color="primary"
 									style={{
@@ -846,7 +848,7 @@ const LoginPage = props => {
 									id="outlined-password-input"
 									fullWidth={true}
 									autoComplete="current-password"
-									placeholder="at least 10 characters"
+									placeholder={t('login.password_placeholder')}
 									margin="normal"
 									variant="outlined"
 									type={showPassword ? "text" : "password"}
@@ -953,7 +955,7 @@ const LoginPage = props => {
 								{loginLoading ? (
 									<CircularProgress color="secondary" style={{ color: "white" }} />
 								) : (
-									"Continue"
+									register ? t('login.login_button') : t('common.register')
 								)}
 							</Button>
 						</div>
