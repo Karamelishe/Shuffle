@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import ReactGA from "react-ga4";
 import LicencePopup from "../components/LicencePopup.jsx";
 import SearchField from "../components/Searchfield.jsx";
+import LanguageSwitcher from "../components/LanguageSwitcher.jsx";
 import {
   Paper,
   Typography,
@@ -785,6 +786,9 @@ const Header = (props) => {
             Login
           </Button>
         </Link>
+        <div style={{ marginLeft: 15, paddingTop: 5 }}>
+          <LanguageSwitcher theme={theme} />
+        </div>
 
       </List>
     </div>
@@ -940,6 +944,9 @@ const Header = (props) => {
               {avatarMenu}
               {supportMenu}
               {logoCheck}
+              <div style={{ marginRight: 15, paddingTop: 5 }}>
+                <LanguageSwitcher theme={theme} />
+              </div>
             </span>
 
             {userdata === undefined ||
@@ -1323,6 +1330,9 @@ const Header = (props) => {
             </Button>
           </Link>
         </ListItem>
+        <ListItem style={{ textAlign: "center" }}>
+          <LanguageSwitcher theme={theme} />
+        </ListItem>
       </List>
     </div>
   ) : (
@@ -1387,6 +1397,9 @@ const Header = (props) => {
             >
               Logout
             </div>
+          </ListItem>
+          <ListItem style={{ textAlign: "center" }}>
+            <LanguageSwitcher theme={theme} />
           </ListItem>
           {logoCheck}
           <ListItem></ListItem>
