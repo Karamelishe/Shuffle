@@ -135,6 +135,22 @@ else
     sudo chmod 666 /var/run/docker.sock 2>/dev/null || true
 fi
 
+cursor/fix-docker-compose-volume-error-and-add-cleanup-script-e0be
+# Step 6.5: Test the system readiness
+print_status "Testing system readiness..."
+if [ -f "./test_system.sh" ]; then
+    if ./test_system.sh > /dev/null 2>&1; then
+        print_success "System test passed"
+    else
+        print_warning "System test failed - some components may need attention"
+        print_status "You can run './test_system.sh' to see detailed results"
+    fi
+else
+    print_warning "System test script not found"
+fi
+
+=======
+ main
 # Step 7: Show final instructions
 echo ""
 print_success "Setup completed successfully!"

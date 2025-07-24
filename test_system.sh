@@ -5,6 +5,16 @@ echo "🔍 Testing Shuffle System..."
 # Test 1: Check if backend compiles
 echo "📦 Testing backend compilation..."
 cd backend/go-app
+
+# Download Go dependencies first (this takes time on first run)
+echo "📥 Downloading Go dependencies (this may take a while on first run)..."
+if go mod download; then
+    echo "✅ Go dependencies downloaded"
+else
+    echo "❌ Go dependency download failed"
+    exit 1
+fi
+
 if go build -o shuffle-backend .; then
     echo "✅ Backend compiles successfully"
     rm -f shuffle-backend
@@ -16,6 +26,18 @@ fi
 # Test 2: Check if frontend builds
 echo "🎨 Testing frontend build..."
 cd ../../frontend
+
+# Check if node_modules exists, if not install dependencies
+if [ ! -d "node_modules" ]; then
+    echo "📦 Installing frontend dependencies..."
+    if npm install --legacy-peer-deps >/dev/null 2>&1; then
+        echo "✅ Frontend dependencies installed"
+    else
+        echo "❌ Frontend dependency installation failed"
+        exit 1
+    fi
+fi
+
 if npm run build >/dev/null 2>&1; then
     echo "✅ Frontend builds successfully"
 else
@@ -26,6 +48,16 @@ fi
 # Test 3: Check if license generator compiles
 echo "🔑 Testing license generator..."
 cd ../backend/license_generator
+
+# Download Go dependencies for license generator
+echo "📥 Downloading license generator dependencies..."
+if go mod download; then
+    echo "✅ License generator dependencies downloaded"
+else
+    echo "❌ License generator dependency download failed"
+    exit 1
+fi
+
 if go build -o license-generator .; then
     echo "✅ License generator compiles successfully"
     rm -f license-generator
